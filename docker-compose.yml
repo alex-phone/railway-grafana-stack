@@ -1,16 +1,6 @@
 version: '3.8'
 
 services:
-    
-  prometheus:
-    build:
-      context: ./prometheus
-      dockerfile: dockerfile
-    user: root # required for data persistence
-    ports:
-      - "9090:9090"
-    volumes:
-      - prometheus_data:/prometheus
 
   loki:
     build:
@@ -48,7 +38,6 @@ services:
       - GF_DEFAULT_INSTANCE_NAME=Grafana
       - GF_INSTALL_PLUGINS=grafana-simple-json-datasource,grafana-piechart-panel,grafana-worldmap-panel,grafana-clock-panel
       - LOKI_INTERNAL_URL=http://loki:3100
-      - PROMETHEUS_INTERNAL_URL=http://prometheus:9090
       - TEMPO_INTERNAL_URL=http://tempo:3200
   
   example_api: 
@@ -62,7 +51,6 @@ services:
       - TEMPO_SERVICE_NAME=example_api
 
 volumes: 
-  prometheus_data:
   loki_data:
   grafana_data:
   tempo_data:
