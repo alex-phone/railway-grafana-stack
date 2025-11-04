@@ -1,6 +1,8 @@
 server:
   http_listen_port: 3200
 
+target: all
+
 compactor:
   compaction:
     compaction_window: 1h
@@ -10,10 +12,12 @@ storage:
     backend: local
     local:
       path: /var/tempo/traces
+    wal:
+      path: /var/tempo/wal
 
 distributor:
   log_received_spans:
-        enabled: true
+    enabled: true
   receivers:
     otlp:
       protocols:
@@ -21,3 +25,13 @@ distributor:
           endpoint: "0.0.0.0:4317"
         http:
           endpoint: "0.0.0.0:4318"
+
+memberlist:
+  abort_if_cluster_join_fails: false
+  bind_port: 7946
+  join_members:
+    - localhost:7946
+
+query_frontend:
+  search:
+    enabled: true
