@@ -3,26 +3,24 @@ apiVersion: 1
 prune: false
 
 datasources:
-  # Loki
   - name: Loki
     type: loki
     access: proxy
     orgId: 1
     uid: grafana_loki
-    url: $LOKI_INTERNAL_URL
+    url: ${LOKI_INTERNAL_URL}  # CAMBIAR: usa ${} en lugar de $
     jsonData:
       maxLines: 1000
       timeout: 60
     isDefault: false
     editable: true
 
-  # Tempo
   - name: Tempo
     type: tempo
     access: proxy
     orgId: 1
     uid: grafana_tempo
-    url: $TEMPO_INTERNAL_URL
+    url: ${TEMPO_INTERNAL_URL}  # CAMBIAR: usa ${} en lugar de $
     jsonData:
       tracesToLogsV2:
         datasourceUid: 'grafana_loki'
@@ -30,16 +28,10 @@ datasources:
         spanEndTimeShift: '1h'
         tags: ['service_name', 'job', 'instance']
         filterByTraceID: true
-        filterBySpanID: false
       tracesToMetrics:
         datasourceUid: 'grafana_prometheus'
-        tags:
-          - key: 'service.name'
-            value: 'service_name'
       serviceMap:
         datasourceUid: 'grafana_prometheus'
-      search:
-        hide: false
       nodeGraph:
         enabled: true
       lokiSearch:
@@ -52,7 +44,7 @@ datasources:
     access: proxy
     orgId: 1
     uid: grafana_prometheus
-    url: $PROMETHEUS_INTERNAL_URL
+    url: ${PROMETHEUS_INTERNAL_URL}  # CAMBIAR: usa ${} en lugar de $
     jsonData:
       httpMethod: POST
       exemplarTraceIdDestinations:
