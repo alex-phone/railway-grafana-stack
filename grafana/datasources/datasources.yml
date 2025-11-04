@@ -8,7 +8,7 @@ datasources:
     access: proxy
     orgId: 1
     uid: grafana_loki
-    url: ${LOKI_INTERNAL_URL}  # CAMBIAR: usa ${} en lugar de $
+    url: http://loki.railway.internal:3100
     jsonData:
       maxLines: 1000
       timeout: 60
@@ -20,7 +20,7 @@ datasources:
     access: proxy
     orgId: 1
     uid: grafana_tempo
-    url: ${TEMPO_INTERNAL_URL}  # CAMBIAR: usa ${} en lugar de $
+    url: http://tempo.railway.internal:3200
     jsonData:
       tracesToLogsV2:
         datasourceUid: 'grafana_loki'
@@ -44,7 +44,7 @@ datasources:
     access: proxy
     orgId: 1
     uid: grafana_prometheus
-    url: ${PROMETHEUS_INTERNAL_URL}  # CAMBIAR: usa ${} en lugar de $
+    url: http://prometheus.railway.internal:9090
     jsonData:
       httpMethod: POST
       exemplarTraceIdDestinations:
