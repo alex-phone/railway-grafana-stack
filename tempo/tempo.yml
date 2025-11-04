@@ -6,6 +6,7 @@ target: all
 compactor:
   compaction:
     compaction_window: 1h
+    block_retention: 168h
 
 storage:
   trace:
@@ -32,6 +33,17 @@ memberlist:
   join_members:
     - localhost:7946
 
+ingester:
+  max_block_duration: 5m
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+
 query_frontend:
   search:
-    enabled: true
+    duration_slo: 5s
+    throughput_bytes_slo: 1.073741824e+09
+  trace_by_id:
+    duration_slo: 5s
